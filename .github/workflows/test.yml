@@ -24,5 +24,5 @@ jobs:
         with:
           name: Artifact
           path: |
-            android/app/build/app/outputs/apk/release/*.apk
+            android/app/build/outputs/apk/release/*.apk
             
