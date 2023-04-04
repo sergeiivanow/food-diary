@@ -23,4 +23,12 @@ jobs:
       - name: Upload build to Diawi
         run: |
           fastlane android upload_build_to_diawi
+      - name: Send a message to Telegram about the crash of the assembly
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Сборка наебунлось, чет 🤷🏿
             
