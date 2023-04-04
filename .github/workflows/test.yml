@@ -6,7 +6,7 @@ name: Test
 jobs:
   build:
     name: Build
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install npm packages
@@ -20,9 +20,7 @@ jobs:
       - name: Build android
         run: |
           fastlane android build
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Artifact
-          path: |
-            android/app/build/outputs/apk/release/*.apk
+      - name: Upload build to Diawi
+        run: |
+          fastlane android upload_build_to_diawi
             
