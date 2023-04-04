@@ -16,9 +16,9 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
       - uses: ruby/setup-ruby@v1
-         with:
-           ruby-version: '3.0.0'
-           bundler-cache: true
+        with:
+          ruby-version: '3.0.0'
+          bundler-cache: true
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
       - name: Build android
