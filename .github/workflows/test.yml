@@ -3,6 +3,11 @@ on:
 
 name: Test
 
+env:
+  DIAWI_TOKEN: ${{ secrets.DIAWI_TOKEN }}
+  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+  CHAT_ID: ${{ secrets.CHAT_ID }}
+
 jobs:
   build:
     name: Build
