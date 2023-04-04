@@ -11,14 +11,16 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install npm packages
         run: yarn install
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.6'
+          bundler-cache: true
+      - name: Modify directory permissions
+        run: sudo chmod -R 777 /var/lib/gems/3.0.0
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '11'
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.0.0'
-          bundler-cache: true
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
       - name: Build android
