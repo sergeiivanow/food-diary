@@ -13,7 +13,7 @@ jobs:
         run: yarn install
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '2.7.6'
           bundler-cache: true
       - uses: actions/setup-java@v3
         with:
