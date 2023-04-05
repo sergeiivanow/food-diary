@@ -8,6 +8,9 @@ default_platform(:android)
 platform :android do
   desc "Android: Build a new version"
   lane :build do
+    Dir.chdir("..") do
+      sh("npx react-native-version --increment-build --target android")
+    end
     gradle(
       task: "assemble",
       build_type: "Release",

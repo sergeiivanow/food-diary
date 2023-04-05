@@ -41,5 +41,13 @@ jobs:
           to: ${{ secrets.CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Сборка наебунлась, чет 🤷🏿
+            🛸 Байконур, у нас проблемы!
+            💥 Jobs link: 
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      - name: Commit
+        if: ${{ success() }}
+        run: |
+          git add android/app/build.gradle ios/**/*.{pbxproj,plist}
+          git commit -m 'auto: Increment build number'
+          git push
             
