@@ -43,7 +43,7 @@ jobs:
         run: |
           git add android/app/build.gradle ios/**/*.{pbxproj,plist}
           git commit -m 'auto: Increment build number'
-          git push
+          git push origin HEAD:${{ github.ref#refs/heads/ }}
       - name: Send a message to Telegram about the crash of the assembly
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master
