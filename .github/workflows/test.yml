@@ -6,7 +6,7 @@ name: Test
 env:
   DIAWI_TOKEN: ${{ secrets.DIAWI_TOKEN }}
   TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-  CHAT_ID: ${{ secrets.CHAT_ID }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
 jobs:
   build:
@@ -30,9 +30,14 @@ jobs:
           java-version: '11'
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
-      - name: Build android
-        run: |
+      - name: Build and sign Android
+        run: | 
+          echo "${{ secrets.ANDROID_RELEASE_KEYSTORE_FILE }}" | base64 -d > ${{ github.workspace }}/fastlane/release.keystore
           fastlane android build
+        env:
+          ANDROID_RELEASE_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSWORD }}
+          ANDROID_RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_RELEASE_KEY_ALIAS }}
+          ANDROID_RELEASE_KEY_PASSWORD: ${{ secrets.ANDROID_RELEASE_KEY_PASSWORD }}
       - name: Setup git config
         run: |
           # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
@@ -50,7 +55,7 @@ jobs:
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master
         with:
-          to: ${{ secrets.CHAT_ID }}
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             🛸 Байконур, у нас проблемы!
