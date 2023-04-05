@@ -34,6 +34,16 @@ jobs:
       - name: Upload build to Diawi
         run: |
           fastlane android upload_build_to_diawi
+      - name: Setup git config
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+      - name: Auto commit
+        run: |
+          git add android/app/build.gradle ios/**/*.{pbxproj,plist}
+          git commit -m 'auto: Increment build number'
+          git push
       - name: Send a message to Telegram about the crash of the assembly
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master
@@ -44,10 +54,4 @@ jobs:
             🛸 Байконур, у нас проблемы!
             💥 Jobs link: 
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      - name: Commit
-        if: ${{ success() }}
-        run: |
-          git add android/app/build.gradle ios/**/*.{pbxproj,plist}
-          git commit -m 'auto: Increment build number'
-          git push
             
