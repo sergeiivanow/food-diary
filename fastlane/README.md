@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Android: Build a new version
 
+### android upload_build_to_diawi
+
+```sh
+[bundle exec] fastlane android upload_build_to_diawi
+```
+
+
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
