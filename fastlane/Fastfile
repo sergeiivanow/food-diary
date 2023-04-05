@@ -14,7 +14,14 @@ platform :android do
     gradle(
       task: "assemble",
       build_type: "Release",
-      project_dir: "android"
+      project_dir: "android",
+      print_command: false,
+      properties: {
+        "android.injected.signing.store.file" => File.join(PROJECT_DIRECTORY, "/fastlane/release.keystore"),
+        "android.injected.signing.store.password" => ENV["ANDROID_RELEASE_KEY_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV["ANDROID_RELEASE_KEY_ALIAS"],
+        "android.injected.signing.key.password" => ENV["ANDROID_RELEASE_KEY_PASSWORD"],
+      }
     )
   end
   
@@ -25,6 +32,7 @@ platform :android do
     )
 
     result_url = lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
+
     path = PROJECT_DIRECTORY + "/android/app/build.gradle"
     re = /versionCode\s+(\d+)/
     re2 = /versionName\s+"([\w.]+)"/
@@ -34,6 +42,6 @@ platform :android do
     versionName = s[re2, 1]
     version = versionName + "(#{versionCode})"
 
-    sh("curl -X POST 'https://api.telegram.org/bot#{ENV["TELEGRAM_TOKEN"]}/sendMessage' -d 'chat_id=#{ENV["CHAT_ID"]}&text=🔥 New version #{version}\nInstallation link .apk \n#{result_url}'")
+    sh("curl -X POST 'https://api.telegram.org/bot#{ENV["TELEGRAM_TOKEN"]}/sendMessage' -d 'chat_id=#{ENV["TELEGRAM_CHAT_ID"]}&text=🔥 New version #{version}\nInstallation link .apk \n#{result_url}'")
   end
 end
