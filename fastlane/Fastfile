@@ -12,8 +12,7 @@ platform :android do
       sh("npx react-native-version --increment-build --target android")
     end
     gradle(
-      task: "assemble",
-      build_type: "Release",
+      tasks: ["clean", "assembleRelease", "bundleRelease"],
       project_dir: "android",
       print_command: false,
       properties: {
@@ -43,5 +42,16 @@ platform :android do
     version = versionName + "(#{versionCode})"
 
     sh("curl -X POST 'https://api.telegram.org/bot#{ENV["TELEGRAM_TOKEN"]}/sendMessage' -d 'chat_id=#{ENV["TELEGRAM_CHAT_ID"]}&text=🔥 New version #{version}\nInstallation link .apk \n#{result_url}'")
+  end
+
+  lane :deploy do
+    upload_to_play_store(
+      package_name: 'ru.sivanow.foodiary',
+      track: 'internal',
+      release_status: 'draft',
+      skip_upload_apk: true,
+      json_key: File.join(PROJECT_DIRECTORY, "/fastlane/google-play-console-api.json"),
+      aab: File.join(PROJECT_DIRECTORY, "/android/app/build/outputs/bundle/release/app-release.aab"),
+    )
   end
 end

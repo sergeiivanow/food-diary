@@ -1,4 +1,4 @@
-package com.foodiary;
+package ru.sivanow.foodiary;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
