@@ -52,7 +52,7 @@ yarn-error.log
 **/fastlane/screenshots
 **/fastlane/test_output
 **/fastlane/.env
-**/fastlane/credentials
+**/fastlane/credentials/*
 
 # Bundle artifact
 *.jsbundle
