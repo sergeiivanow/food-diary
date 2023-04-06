@@ -67,7 +67,7 @@ jobs:
       
       - name: Upload appbundle to the Google play
         run: |
-        fastlane android deploy
+          fastlane android deploy
 
       - name: Upload build to Diawi
         run: |
