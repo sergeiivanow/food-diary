@@ -39,7 +39,7 @@ jobs:
       - name: Build and sign Android
         run: | 
           echo "${{ secrets.ANDROID_RELEASE_KEYSTORE_FILE }}" | base64 -d > ${{ github.workspace }}/fastlane/credentials/android-release.keystore
-          fastlane android build
+          fastlane android release_build
         env:
           ANDROID_RELEASE_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSWORD }}
           ANDROID_RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_RELEASE_KEY_ALIAS }}
@@ -54,7 +54,7 @@ jobs:
       - name: Auto commit
         run: |
           git add android/app/build.gradle ios/**/*.{pbxproj,plist}
-          git commit -m 'auto: Increment build number'
+          git commit -m 'auto: Deploy to stores'
           git pull origin main
           git push origin HEAD:main
       

@@ -8,11 +8,7 @@ last_tag = last_git_tag().to_s
 CURRENT_VERSION = last_tag.start_with?("v") ? last_tag.sub("v", "") : "1.0.0"
 
 platform :android do
-  desc "Android: Build a new version"
-  lane :build do
-    Dir.chdir("..") do
-      sh("npx react-native-version --increment-build --target android")
-    end
+  def build
     gradle(
       tasks: ["clean", "assembleRelease", "bundleRelease"],
       project_dir: "android",
@@ -24,6 +20,20 @@ platform :android do
         "android.injected.signing.key.password" => ENV["ANDROID_RELEASE_KEY_PASSWORD"],
       }
     )
+  end
+
+  lane :test_build do
+    Dir.chdir("..") do
+      sh("npx react-native-version --increment-build --target android")
+    end
+    build_android_release()
+  end
+
+  lane :release_build do
+    Dir.chdir("..") do
+      sh("npm version #{CURRENT_VERSION} --no-git-tag-version")
+    end
+    build_android_release()
   end
   
   lane :upload_build_to_diawi do
