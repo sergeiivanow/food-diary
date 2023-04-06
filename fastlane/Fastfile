@@ -30,9 +30,7 @@ platform :android do
   end
 
   lane :release_build do
-    Dir.chdir("..") do
-      sh("npm version #{CURRENT_VERSION} --no-git-tag-version")
-    end
+    sh("npm version #{CURRENT_VERSION} --no-git-tag-version")
     build_android_release()
   end
   
