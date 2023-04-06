@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "postversion": "react-native-version"
+    "postversion": "react-native-version --never-amend"
   },
   "dependencies": {
     "@emotion/native": "11.10.6",
