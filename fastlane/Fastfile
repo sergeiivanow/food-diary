@@ -1,9 +1,11 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
+default_platform(:android)
 
 PROJECT_DIRECTORY = File.expand_path("..", Dir.pwd)
 
-default_platform(:android)
+last_tag = last_git_tag().to_s
+CURRENT_VERSION = last_tag.start_with?("v") ? last_tag.sub("v", "") : "1.0.0"
 
 platform :android do
   desc "Android: Build a new version"
@@ -34,14 +36,11 @@ platform :android do
 
     path = PROJECT_DIRECTORY + "/android/app/build.gradle"
     re = /versionCode\s+(\d+)/
-    re2 = /versionName\s+"([\w.]+)"/
 
     s = File.read(path)
     versionCode = s[re, 1].to_i
-    versionName = s[re2, 1]
-    version = versionName + "(#{versionCode})"
 
-    sh("curl -X POST 'https://api.telegram.org/bot#{ENV["TELEGRAM_TOKEN"]}/sendMessage' -d 'chat_id=#{ENV["TELEGRAM_CHAT_ID"]}&text=🔥 New version #{version}\nInstallation link .apk \n#{result_url}'")
+    sh("curl -X POST 'https://api.telegram.org/bot#{ENV["TELEGRAM_TOKEN"]}/sendMessage' -d 'chat_id=#{ENV["TELEGRAM_CHAT_ID"]}&text=🔥 New version #{CURRENT_VERSION}(#{versionCode})\nInstallation link .apk \n#{result_url}'")
   end
 
   lane :deploy do
