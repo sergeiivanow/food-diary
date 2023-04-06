@@ -16,7 +16,7 @@ platform :android do
       project_dir: "android",
       print_command: false,
       properties: {
-        "android.injected.signing.store.file" => File.join(PROJECT_DIRECTORY, "/fastlane/release.keystore"),
+        "android.injected.signing.store.file" => File.join(PROJECT_DIRECTORY, "/fastlane/credentials/android-release.keystore"),
         "android.injected.signing.store.password" => ENV["ANDROID_RELEASE_KEY_PASSWORD"],
         "android.injected.signing.key.alias" => ENV["ANDROID_RELEASE_KEY_ALIAS"],
         "android.injected.signing.key.password" => ENV["ANDROID_RELEASE_KEY_PASSWORD"],
@@ -50,7 +50,7 @@ platform :android do
       track: 'internal',
       release_status: 'draft',
       skip_upload_apk: true,
-      json_key: File.join(PROJECT_DIRECTORY, "/fastlane/google-play-console-api.json"),
+      json_key: File.join(PROJECT_DIRECTORY, "/fastlane/credentials/google-service-api-key.json"),
       aab: File.join(PROJECT_DIRECTORY, "/android/app/build/outputs/bundle/release/app-release.aab"),
     )
   end

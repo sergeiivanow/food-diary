@@ -52,7 +52,7 @@ yarn-error.log
 **/fastlane/screenshots
 **/fastlane/test_output
 **/fastlane/.env
-**/fastlane/google-play-console-api.json
+**/fastlane/credentials
 
 # Bundle artifact
 *.jsbundle
