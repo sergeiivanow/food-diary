@@ -55,6 +55,7 @@ jobs:
         run: |
           git add android/app/build.gradle ios/**/*.{pbxproj,plist}
           git commit -m 'auto: Increment build number'
+          git pull
           git push origin HEAD:main
       
       - name: Create google service api key
