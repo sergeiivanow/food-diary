@@ -66,8 +66,8 @@ jobs:
           dir: 'fastlane/credentials'
       
       - name: Upload appbundle to the Google play
-         run: |
-          fastlane android deploy
+        run: |
+        fastlane android deploy
 
       - name: Upload build to Diawi
         run: |
