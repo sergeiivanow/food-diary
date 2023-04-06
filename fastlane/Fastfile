@@ -69,3 +69,19 @@ platform :android do
     )
   end
 end
+
+platform :ios do
+  lane :build do
+    build_app(
+      configuration: "Release",
+      export_method: "ad-hoc",
+      scheme: 'foodiary',
+      workspace:  "ios/foodiary.xcworkspace",
+      skip_codesigning: true,
+      skip_package_ipa: true,
+      output_directory: 'fastlane',
+      output_name: 'app-release.ipa',
+      archive_path: "fastlane/build/foodiary.xcarchive"
+    )
+  end
+end

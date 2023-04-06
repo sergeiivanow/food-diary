@@ -15,13 +15,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Android
 
-### android build
+### android test_build
 
 ```sh
-[bundle exec] fastlane android build
+[bundle exec] fastlane android test_build
 ```
 
-Android: Build a new version
+
+
+### android release_build
+
+```sh
+[bundle exec] fastlane android release_build
+```
+
+
 
 ### android upload_build_to_diawi
 
@@ -35,6 +43,19 @@ Android: Build a new version
 
 ```sh
 [bundle exec] fastlane android deploy
+```
+
+
+
+----
+
+
+## iOS
+
+### ios build
+
+```sh
+[bundle exec] fastlane ios build
 ```
 
 
