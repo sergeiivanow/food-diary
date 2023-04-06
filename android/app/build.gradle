@@ -93,12 +93,12 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.foodiary"
+    namespace "ru.sivanow.foodiary"
     defaultConfig {
-        applicationId "com.foodiary"
+        applicationId "ru.sivanow.foodiary"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 10
         versionName "1.0"
     }
 

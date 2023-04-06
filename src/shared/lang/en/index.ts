@@ -1,6 +1,6 @@
 export const en = {
   login: 'Login',
-  home: 'Home',
+  home: 'Diary',
   settings: 'Settings',
   appearance: 'Appearance',
   welcome: 'Welcome',

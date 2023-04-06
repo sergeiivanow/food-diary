@@ -1,7 +1,9 @@
 on:
-  pull_request:
+  push:
+    tags:
+      - '*.*.*'
 
-name: Test
+name: Relese
 
 env:
   DIAWI_TOKEN: ${{ secrets.DIAWI_TOKEN }}
@@ -14,8 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Install npm packages
         run: yarn install
@@ -55,7 +55,19 @@ jobs:
         run: |
           git add android/app/build.gradle ios/**/*.{pbxproj,plist}
           git commit -m 'auto: Increment build number'
-          git push
+          git push origin HEAD:main
+      
+      - name: Create google service api key
+        id: create-json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "google-service-api-key.json"
+          json: ${{ secrets.GOOGLE_SERVICE_API_KEY_JSON_FILE }}
+          dir: 'fastlane/credentials'
+      
+      - name: Upload appbundle to the Google play
+         run: |
+          fastlane android deploy
 
       - name: Upload build to Diawi
         run: |
