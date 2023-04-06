@@ -26,7 +26,7 @@ platform :android do
     Dir.chdir("..") do
       sh("npx react-native-version --increment-build --target android")
     end
-    build_android_release()
+    build()
   end
 
   lane :release_build do
@@ -38,7 +38,7 @@ platform :android do
         sh("npx react-native-version --increment-build --target android")
       end
     end
-    build_android_release()
+    build()
   end
   
   lane :upload_build_to_diawi do
