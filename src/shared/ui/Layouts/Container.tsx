@@ -1,6 +1,6 @@
 import React from 'react'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import styled, {css} from '@emotion/native'
+import {css} from '@emotion/native'
 
 interface ContainerProps {
   children: React.ReactNode
