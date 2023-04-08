@@ -20,6 +20,9 @@ jobs:
       - name: Install npm packages
         run: yarn install
 
+      - name: Run tests
+        run: yarn run test
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7.6'

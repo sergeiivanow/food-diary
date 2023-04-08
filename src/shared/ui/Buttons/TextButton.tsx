@@ -34,7 +34,7 @@ export function TextButton(props: ButtonProps & TouchableOpacityProps) {
       color={props.color}
       {...props}>
       {props.loading ? (
-        <ActivityIndicator />
+        <ActivityIndicator testID="loading" />
       ) : (
         <Font
           family="roboto"
