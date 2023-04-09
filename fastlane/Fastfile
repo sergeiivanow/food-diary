@@ -4,6 +4,11 @@ default_platform(:android)
 
 PROJECT_DIRECTORY = File.expand_path("..", Dir.pwd)
 
+ANDROID_RELEASE_KEYSTORE_FILE_PATH = File.join(PROJECT_DIRECTORY, "/fastlane/credentials/android-release.keystore")
+ANDROID_RELEASE_APK_FILE_PATH = File.join(PROJECT_DIRECTORY, "/android/app/build/outputs/apk/release/app-release.apk")
+ANDROID_GOOGLE_SERVICE_KEY_JSON_PATH = File.join(PROJECT_DIRECTORY, "/fastlane/credentials/google-service-api-key.json")
+ANDROID_RELEASE_AAB_FILE_PATH = File.join(PROJECT_DIRECTORY, "/android/app/build/outputs/bundle/release/app-release.aab")
+
 last_tag = last_git_tag().to_s
 CURRENT_VERSION = last_tag.start_with?("v") ? last_tag.sub("v", "") : "1.0.0"
 
@@ -14,7 +19,7 @@ platform :android do
       project_dir: "android",
       print_command: false,
       properties: {
-        "android.injected.signing.store.file" => File.join(PROJECT_DIRECTORY, "/fastlane/credentials/android-release.keystore"),
+        "android.injected.signing.store.file" => ANDROID_RELEASE_KEYSTORE_FILE_PATH,
         "android.injected.signing.store.password" => ENV["ANDROID_RELEASE_KEY_PASSWORD"],
         "android.injected.signing.key.alias" => ENV["ANDROID_RELEASE_KEY_ALIAS"],
         "android.injected.signing.key.password" => ENV["ANDROID_RELEASE_KEY_PASSWORD"],
@@ -44,7 +49,7 @@ platform :android do
   lane :upload_build_to_diawi do
     diawi(
       token: ENV["DIAWI_TOKEN"],
-      file: File.join(PROJECT_DIRECTORY, "android/app/build/outputs/apk/release/app-release.apk"),
+      file: ANDROID_RELEASE_APK_FILE_PATH,
     )
 
     result_url = lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
@@ -64,8 +69,8 @@ platform :android do
       track: 'internal',
       release_status: 'draft',
       skip_upload_apk: true,
-      json_key: File.join(PROJECT_DIRECTORY, "/fastlane/credentials/google-service-api-key.json"),
-      aab: File.join(PROJECT_DIRECTORY, "/android/app/build/outputs/bundle/release/app-release.aab"),
+      json_key: ANDROID_GOOGLE_SERVICE_KEY_JSON_PATH,
+      aab: ANDROID_RELEASE_AAB_FILE_PATH,
     )
   end
 end
