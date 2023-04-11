@@ -8,4 +8,5 @@ export enum ScreenRoutes {
   Login = '/login-screen',
   Home = '/home-screen',
   Settings = '/settings-screen',
+  Meal = '/meal-screen',
 }

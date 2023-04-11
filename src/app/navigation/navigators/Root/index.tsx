@@ -5,6 +5,8 @@ import {Welcome} from '../Welcome'
 import {configureOptions} from '../../options'
 import {s} from 'shared/lang'
 import {NavigatorRoutes} from 'shared/config'
+import {Screens} from 'screens'
+import {ScreenRoutes} from 'shared/config'
 
 const RootStack = createNativeStackNavigator<AppNavigation.Root>()
 
@@ -24,6 +26,13 @@ export const Root = () => {
         component={Main}
         options={configureOptions()}
       />
+      <RootStack.Group screenOptions={{presentation: 'modal'}}>
+        <RootStack.Screen
+          name={ScreenRoutes.Meal}
+          component={Screens.get(ScreenRoutes.Meal)!}
+          options={configureOptions()}
+        />
+      </RootStack.Group>
     </RootStack.Navigator>
   )
 }
