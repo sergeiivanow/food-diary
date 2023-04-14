@@ -1,5 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {appearanceReducer} from 'features/changeAppearance'
+import {mealReducer} from 'entities/meal'
 import {
   persistStore,
   persistReducer,
@@ -15,6 +16,7 @@ import {storage} from '../storage'
 
 const reducers = combineReducers({
   appearance: appearanceReducer,
+  meal: mealReducer,
 })
 
 const persistConfig = {
