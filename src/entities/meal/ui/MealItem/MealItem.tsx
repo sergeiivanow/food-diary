@@ -4,10 +4,10 @@ import * as UI from 'shared/ui'
 import {Meal} from '../../model'
 
 export function MealItem({item}: {item: Meal}) {
-  const {mealDate} = item
+  const {ate} = item
   return (
     <View>
-      <UI.Font>{mealDate}</UI.Font>
+      <UI.Font>{ate}</UI.Font>
     </View>
   )
 }

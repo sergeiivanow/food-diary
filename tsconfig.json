@@ -7,8 +7,17 @@
         "name": "typescript-styled-plugin",
         "lint": {
           "validProperties": [
+            "allow-font-scaling",
             "include-font-padding",
             "text-align-vertical",
+            "padding-horizontal",
+            "padding-vertical",
+            "margin-horizontal",
+            "shadow-color",
+            "shadow-offset",
+            "shadow-opacity",
+            "shadow-radius",
+            "elevation",
           ]
         }
       }

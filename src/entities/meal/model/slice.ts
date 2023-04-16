@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {isSameDay} from 'date-fns'
 
 export interface Meal {
   mealDate: string
@@ -44,8 +45,8 @@ export const mealSlice = createSlice({
   reducers: {
     add: (state, action: PayloadAction<Meal>) => {
       const updatedSecitons = [...state.mealSectionList]
-      const matchedSection = updatedSecitons.filter(
-        item => item.title === action.payload.mealDate,
+      const matchedSection = updatedSecitons.filter(item =>
+        isSameDay(new Date(item.title), new Date(action.payload.mealDate)),
       )[0]
       if (matchedSection) {
         // update found section
