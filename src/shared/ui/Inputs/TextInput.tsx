@@ -1,8 +1,11 @@
 import React, {forwardRef} from 'react'
-import {TextInputProps, TextInput as RNTextInput} from 'react-native'
-import styled from '@emotion/native'
-import {FontSizes, FontWeights, Colors} from '@emotion/react'
-import {useTheme} from '@emotion/react'
+import {
+  StyleSheet,
+  TextInputProps,
+  TextInput as RNTextInput,
+} from 'react-native'
+import {FontSizes, FontWeights, Colors, useTheme} from '../../theme'
+import {fluidSize} from '../../lib'
 
 export interface InputProps {
   width?: number | string
@@ -16,32 +19,43 @@ export interface InputProps {
   multiline?: boolean
 }
 
-const StyledTextInput = styled.TextInput<InputProps>`
-  height: 40px;
-  padding: 0px;
-  font-family: ${({theme, weight}) =>
-    theme.fontNames.roboto[weight ?? 'regular']};
-  font-size: ${({theme, size}) => theme.fontSizes[size ?? 'medium']};
-  line-height: ${({theme, size, lineHeight}) => {
-    if (!lineHeight) {
-      return lineHeight // auto
-    }
-    return lineHeight * parseInt(theme.fontSizes[size ?? 'medium'], 10) + 'px'
-  }};
-  color: ${({theme, color}) => theme.colors[color ?? 'text']};
-  border: 1px solid red;
-`
-
 export const TextInput = forwardRef<RNTextInput, InputProps & TextInputProps>(
   (props, ref) => {
-    const theme = useTheme()
+    const {styles, theme} = useStyles({weight: props.weight})
 
     return (
-      <StyledTextInput
+      <RNTextInput
         {...props}
         ref={ref}
         placeholderTextColor={props.placeholderTextColor ?? theme.colors.text}
+        style={styles.container}
       />
     )
   },
 )
+
+const useStyles = <
+  T extends {weight?: FontWeights; lineHeight?: number; size?: FontSizes},
+>(
+  props: T,
+) => {
+  const {theme} = useTheme()
+  const styles = React.useMemo(() => {
+    let lineHeight = props.lineHeight
+    if (lineHeight) {
+      lineHeight = lineHeight * theme.fontSizes[props.size ?? 'medium']
+    }
+    return StyleSheet.create({
+      container: {
+        lineHeight,
+        height: fluidSize(40),
+        includeFontPadding: false,
+        textAlignVertical: 'center',
+        fontFamily: theme.fontNames.roboto[props.weight ?? 'medium'],
+        fontSize: theme.fontSizes.medium,
+        color: theme.colors.text,
+      },
+    })
+  }, [theme, props])
+  return {styles, theme}
+}
