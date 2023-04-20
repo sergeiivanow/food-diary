@@ -44,12 +44,13 @@ const createStyles =
     return StyleSheet.create({
       container: {
         lineHeight,
-        height: fluidSize(40),
+        height: fluidSize(200),
         includeFontPadding: false,
         textAlignVertical: 'center',
         fontFamily: theme.fontNames.roboto[props.weight ?? 'medium'],
         fontSize: theme.fontSizes.medium,
         color: theme.colors.text,
+        borderWidth: 1,
       },
     })
   }

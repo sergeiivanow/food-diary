@@ -9245,6 +9245,11 @@ react-native-modal-selector@^2.1.1:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-pager-view@^6.1.0-rc.2:
+  version "6.1.0-rc.2"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.1.0-rc.2.tgz#aabd9c165d6f21e88677e2a9310f956d9e14c3e6"
+  integrity sha512-hP/AJxwPf3jUNrXoAyVk7ZdknXtSoadRthH/duSgWdjokkaHgtqyp3hPG6pJ40Q/gPuN5Kkca6SJTzY81WYEKA==
+
 react-native-reanimated@3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.0.2.tgz#8f7284fab2b0cd949779429e48f32d19a966bbd6"
