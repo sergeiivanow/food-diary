@@ -1,6 +1,13 @@
 import React from 'react'
 import {TextProps, StyleSheet, Text} from 'react-native'
-import {FontSizes, FontFamily, FontWeights, Colors, useTheme} from '../../theme'
+import {
+  FontSizes,
+  FontFamily,
+  FontWeights,
+  Colors,
+  useStyles,
+  Theme,
+} from '../../theme'
 
 interface FontProps {
   size?: FontSizes
@@ -17,7 +24,7 @@ interface FontProps {
 }
 
 export function Font(props: FontProps & TextProps) {
-  const styles = useStyles(props)
+  const {styles} = useStyles(createStyles({weight: props.weight}))
   return (
     <Text adjustsFontSizeToFit {...props} style={styles.container}>
       {props.devMode ? props.size : props.children}
@@ -25,13 +32,9 @@ export function Font(props: FontProps & TextProps) {
   )
 }
 
-const useStyles = <
-  T extends {weight?: FontWeights; lineHeight?: number; size?: FontSizes},
->(
-  props: T,
-) => {
-  const {theme} = useTheme()
-  const styles = React.useMemo(() => {
+const createStyles =
+  (props: {weight?: FontWeights; lineHeight?: number; size?: FontSizes}) =>
+  (theme: Theme) => {
     let lineHeight = props.lineHeight
     if (lineHeight) {
       lineHeight = lineHeight * theme.fontSizes[props.size ?? 'medium']
@@ -47,6 +50,4 @@ const useStyles = <
         color: theme.colors.text,
       },
     })
-  }, [theme, props])
-  return styles
-}
+  }

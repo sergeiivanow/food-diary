@@ -4,7 +4,7 @@ import {
   TextInputProps,
   TextInput as RNTextInput,
 } from 'react-native'
-import {FontSizes, FontWeights, Colors, useTheme} from '../../theme'
+import {FontSizes, FontWeights, Colors, useStyles, Theme} from '../../theme'
 import {fluidSize} from '../../lib'
 
 export interface InputProps {
@@ -21,7 +21,7 @@ export interface InputProps {
 
 export const TextInput = forwardRef<RNTextInput, InputProps & TextInputProps>(
   (props, ref) => {
-    const {styles, theme} = useStyles({weight: props.weight})
+    const {styles, theme} = useStyles(createStyles({weight: props.weight}))
 
     return (
       <RNTextInput
@@ -34,13 +34,9 @@ export const TextInput = forwardRef<RNTextInput, InputProps & TextInputProps>(
   },
 )
 
-const useStyles = <
-  T extends {weight?: FontWeights; lineHeight?: number; size?: FontSizes},
->(
-  props: T,
-) => {
-  const {theme} = useTheme()
-  const styles = React.useMemo(() => {
+const createStyles =
+  (props: {weight?: FontWeights; lineHeight?: number; size?: FontSizes}) =>
+  (theme: Theme) => {
     let lineHeight = props.lineHeight
     if (lineHeight) {
       lineHeight = lineHeight * theme.fontSizes[props.size ?? 'medium']
@@ -56,6 +52,4 @@ const useStyles = <
         color: theme.colors.text,
       },
     })
-  }, [theme, props])
-  return {styles, theme}
-}
+  }

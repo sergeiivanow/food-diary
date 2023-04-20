@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Colors, useTheme} from '../theme'
+import {Colors, useStyles, Theme} from '../theme'
 
 interface SpacerProps {
   size: number
@@ -8,22 +8,15 @@ interface SpacerProps {
 }
 
 export const Spacer = (props: SpacerProps) => {
-  const styles = useStyles(props)
+  const {styles} = useStyles(createStyles(props))
   return <View style={styles.container} />
 }
 
-const useStyles = (props: SpacerProps) => {
-  const {theme} = useTheme()
-  const styles = React.useMemo(
-    () =>
-      StyleSheet.create({
-        container: {
-          height: props.size,
-          width: props.size,
-          backgroundColor: theme.colors[props.color],
-        },
-      }),
-    [theme, props],
-  )
-  return styles
-}
+const createStyles = (props: SpacerProps) => (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      height: props.size,
+      width: props.size,
+      backgroundColor: theme.colors[props.color],
+    },
+  })

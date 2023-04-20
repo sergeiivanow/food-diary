@@ -2,7 +2,7 @@ import React from 'react'
 import {ActivityIndicator, StyleSheet, TouchableOpacity} from 'react-native'
 import {TouchableOpacityProps} from 'react-native'
 import {fluidSize} from '../../lib'
-import {Colors, useTheme} from '../../theme'
+import {Colors, useStyles} from '../../theme'
 import {Font} from '../Font'
 
 export interface ButtonProps {
@@ -15,7 +15,7 @@ export interface ButtonProps {
 }
 
 export function TextButton(props: ButtonProps & TouchableOpacityProps) {
-  const styles = useStyles()
+  const {styles} = useStyles(createStyles)
   return (
     <TouchableOpacity
       disabled={props.disabled || props.loading}
@@ -38,21 +38,13 @@ export function TextButton(props: ButtonProps & TouchableOpacityProps) {
   )
 }
 
-const useStyles = () => {
-  const {theme} = useTheme()
-  const styles = React.useMemo(
-    () =>
-      StyleSheet.create({
-        container: {
-          width: '100%',
-          height: fluidSize(44, 'vertical'),
-          borderRadius: fluidSize(8),
-          justifyContent: 'center',
-          alignItems: 'center',
-        },
-      }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [theme],
-  )
-  return styles
-}
+const createStyles = () =>
+  StyleSheet.create({
+    container: {
+      width: '100%',
+      height: fluidSize(44, 'vertical'),
+      borderRadius: fluidSize(8),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  })

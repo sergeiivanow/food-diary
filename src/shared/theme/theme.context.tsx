@@ -76,3 +76,12 @@ export const ThemeProvider = React.memo<Props>(props => {
 })
 
 export const useTheme = () => React.useContext(Context)
+
+type Generator<T extends {}> = (theme: Theme) => T
+
+export const useStyles = <T extends {}>(fun: Generator<T>) => {
+  const {theme} = useTheme()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const styles = React.useMemo(() => fun(theme), [theme])
+  return {styles, theme}
+}
