@@ -6,6 +6,7 @@ import {useMeal} from 'entities/meal'
 import {useStyles} from 'shared/theme'
 import PagerView from 'react-native-pager-view'
 import Slider from 'rn-range-slider'
+import {Rating} from 'react-native-ratings'
 
 export function MealForm() {
   const pagerViewRef = useRef<PagerView>(null)
@@ -15,6 +16,7 @@ export function MealForm() {
   const [drank, setDrank] = useState('')
   const [contect, setContect] = useState('')
   const [evaluation, setEvaluation] = useState('')
+  const [volume, setVolume] = useState('')
   const {addNewMeal} = useMeal()
   const {styles} = useStyles(createStyles)
   const saveActive = ate && drank && contect && evaluation
@@ -25,8 +27,8 @@ export function MealForm() {
       ate,
       drank,
       contect,
-      evaluation: 'От 5 до 7',
-      volume: '5 кулаков',
+      evaluation,
+      volume,
     })
     goBack()
   }
@@ -81,6 +83,21 @@ export function MealForm() {
             onValueChanged={(low, high) => {
               setEvaluation(`От ${low} до ${high}`)
             }}
+          />
+        </View>
+        <View key="volume">
+          <UI.Font>{volume}</UI.Font>
+          <Rating
+            type="custom"
+            ratingImage={undefined}
+            ratingColor="#3498db"
+            ratingBackgroundColor="#c8c7c8"
+            ratingCount={10}
+            imageSize={30}
+            onFinishRating={r => {
+              setVolume(r)
+            }}
+            style={{paddingVertical: 10}}
           />
         </View>
       </PagerView>
