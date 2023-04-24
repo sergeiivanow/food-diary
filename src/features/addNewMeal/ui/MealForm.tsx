@@ -5,6 +5,7 @@ import {useNavigationActions} from 'shared/lib'
 import {useMeal} from 'entities/meal'
 import {useStyles} from 'shared/theme'
 import PagerView from 'react-native-pager-view'
+import Slider from 'rn-range-slider'
 
 export function MealForm() {
   const pagerViewRef = useRef<PagerView>(null)
@@ -13,9 +14,10 @@ export function MealForm() {
   const [ate, setAte] = useState('')
   const [drank, setDrank] = useState('')
   const [contect, setContect] = useState('')
+  const [evaluation, setEvaluation] = useState('')
   const {addNewMeal} = useMeal()
   const {styles} = useStyles(createStyles)
-  const saveActive = ate && drank && contect
+  const saveActive = ate && drank && contect && evaluation
 
   function save() {
     addNewMeal({
@@ -60,6 +62,26 @@ export function MealForm() {
         </View>
         <View key="contect">
           <UI.TextInput value={contect} onChangeText={setContect} />
+        </View>
+        <View key="evaluation">
+          <UI.Font>{evaluation}</UI.Font>
+          <Slider
+            style={{}}
+            min={0}
+            max={100}
+            step={1}
+            floatingLabel
+            renderThumb={() => (
+              <View style={{width: 20, height: 20, backgroundColor: 'red'}} />
+            )}
+            renderRail={() => <View />}
+            renderRailSelected={() => <View />}
+            renderLabel={() => <View />}
+            renderNotch={() => <View />}
+            onValueChanged={(low, high) => {
+              setEvaluation(`От ${low} до ${high}`)
+            }}
+          />
         </View>
       </PagerView>
       <UI.TextButton title="Назад" onPress={previous} />
