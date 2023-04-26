@@ -95,7 +95,7 @@ export function MealForm() {
             ratingCount={10}
             imageSize={30}
             onFinishRating={r => {
-              setVolume(r)
+              setVolume(`${r} кул.`)
             }}
             style={{paddingVertical: 10}}
           />

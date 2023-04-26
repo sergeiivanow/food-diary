@@ -2,11 +2,11 @@ import React from 'react'
 import {ActivityIndicator, StyleSheet, TouchableOpacity} from 'react-native'
 import {TouchableOpacityProps} from 'react-native'
 import {fluidSize} from '../../lib'
-import {useStyles} from '../../theme'
+import {useStyles, Theme} from '../../theme'
 import {Font} from '../Font'
 import {ButtonProps} from './types'
 
-export function TextButton(props: ButtonProps & TouchableOpacityProps) {
+export function PrimaryButton(props: ButtonProps & TouchableOpacityProps) {
   const {styles} = useStyles(createStyles)
   return (
     <TouchableOpacity
@@ -30,7 +30,7 @@ export function TextButton(props: ButtonProps & TouchableOpacityProps) {
   )
 }
 
-const createStyles = () =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       width: '100%',
@@ -38,5 +38,15 @@ const createStyles = () =>
       borderRadius: fluidSize(8),
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: theme.colors.primaryButton,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 7,
+      },
+      shadowOpacity: 0.1,
+      shadowRadius: 9,
+
+      elevation: 14,
     },
   })

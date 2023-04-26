@@ -4,7 +4,7 @@ import {Colors, useStyles, Theme} from '../theme'
 
 interface SpacerProps {
   size: number
-  color: Colors
+  color?: Colors
 }
 
 export const Spacer = (props: SpacerProps) => {
@@ -17,6 +17,6 @@ const createStyles = (props: SpacerProps) => (theme: Theme) =>
     container: {
       height: props.size,
       width: props.size,
-      backgroundColor: theme.colors[props.color],
+      backgroundColor: theme.colors[props.color ?? 'empty'],
     },
   })

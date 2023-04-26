@@ -32,6 +32,8 @@ export const fontSizes = {
 export const colors = {
   empty: palette.transparent,
   backgroundDefault: palette.white,
+  itemCard: palette.white,
+  primaryButton: palette.white,
   // navigation
   primary: palette.azureRadiance,
   background: palette.concrete,
