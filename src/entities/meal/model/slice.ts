@@ -25,16 +25,7 @@ const initialState: MealState = {
   mealSectionList: [
     {
       title: new Date().toISOString(),
-      data: [
-        {
-          mealDate: new Date().toISOString(),
-          ate: 'Шоколад',
-          drank: 'Апельсиновый сок',
-          contect: 'Забежал в столовку',
-          evaluation: 'От 5 до 7',
-          volume: '5 кулаков',
-        },
-      ],
+      data: [],
     },
   ],
 }
