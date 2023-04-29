@@ -27,6 +27,7 @@ export const TextInput = forwardRef<RNTextInput, InputProps & TextInputProps>(
       <RNTextInput
         {...props}
         ref={ref}
+        multiline
         placeholderTextColor={props.placeholderTextColor ?? theme.colors.text}
         style={styles.container}
       />
@@ -44,13 +45,12 @@ const createStyles =
     return StyleSheet.create({
       container: {
         lineHeight,
-        height: fluidSize(200),
+        height: fluidSize(300),
         includeFontPadding: false,
         textAlignVertical: 'center',
         fontFamily: theme.fontNames.roboto[props.weight ?? 'medium'],
         fontSize: theme.fontSizes.medium,
         color: theme.colors.text,
-        borderWidth: 1,
       },
     })
   }

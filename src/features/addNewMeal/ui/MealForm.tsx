@@ -1,5 +1,10 @@
 import React, {useState, useRef} from 'react'
-import {StyleSheet, View} from 'react-native'
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  NativeSyntheticEvent,
+} from 'react-native'
 import * as UI from 'shared/ui'
 import {useNavigationActions} from 'shared/lib'
 import {useMeal} from 'entities/meal'
@@ -7,19 +12,28 @@ import {useStyles} from 'shared/theme'
 import PagerView from 'react-native-pager-view'
 import Slider from 'rn-range-slider'
 import {Rating} from 'react-native-ratings'
+import {FistIcon} from 'shared/assets/icons'
+import {useMealForm} from '../model'
 
 export function MealForm() {
   const pagerViewRef = useRef<PagerView>(null)
   const [currentPage, setCurrentPage] = useState(0)
   const {goBack} = useNavigationActions()
-  const [ate, setAte] = useState('')
-  const [drank, setDrank] = useState('')
-  const [contect, setContect] = useState('')
-  const [evaluation, setEvaluation] = useState('')
-  const [volume, setVolume] = useState('')
+  const {
+    ate,
+    drank,
+    contect,
+    evaluation,
+    volume,
+    setAte,
+    setDrank,
+    setContect,
+    setEvaluation,
+    setVolume,
+    saveActive,
+  } = useMealForm()
   const {addNewMeal} = useMeal()
-  const {styles} = useStyles(createStyles)
-  const saveActive = ate && drank && contect && evaluation
+  const {styles, theme} = useStyles(createStyles)
 
   function save() {
     addNewMeal({
@@ -48,69 +62,117 @@ export function MealForm() {
     scrollToPage(currentPage + 1)
   }
 
+  function onPageSelected(
+    event: NativeSyntheticEvent<
+      Readonly<{
+        position: number
+      }>
+    >,
+  ) {
+    setCurrentPage(event.nativeEvent.position)
+  }
+
+  const renderThumb = () => <View style={styles.lap} />
+
+  const onSliderValueChanged = (low: number, high: number) => {
+    setEvaluation(`От ${low} до ${high}`)
+  }
+
+  const onFinishRating = (f: number) => {
+    setVolume(`${f} кул.`)
+  }
+
   return (
-    <>
+    <KeyboardAvoidingView
+      style={styles.container}
+      keyboardVerticalOffset={50}
+      behavior="padding">
       <PagerView
         ref={pagerViewRef}
-        style={styles.container}
+        style={styles.pager}
         initialPage={currentPage}
         scrollEnabled={false}
-        onPageSelected={event => setCurrentPage(event.nativeEvent.position)}>
+        onPageSelected={onPageSelected}>
         <View key="ate">
+          <UI.Font size="xxLarge">{'Что ели?'}</UI.Font>
           <UI.TextInput value={ate} onChangeText={setAte} />
         </View>
         <View key="drank">
-          <UI.TextInput value={drank} onChangeText={setDrank} />
+          <UI.Font size="xxLarge">{'Что пили?'}</UI.Font>
+          <UI.TextInput size="xLarge" value={drank} onChangeText={setDrank} />
         </View>
         <View key="contect">
+          <UI.Font size="xxLarge">{'Контекст'}</UI.Font>
           <UI.TextInput value={contect} onChangeText={setContect} />
         </View>
         <View key="evaluation">
+          <UI.Font size="xxLarge">{'Оценка голода и насыщения'}</UI.Font>
           <UI.Font>{evaluation}</UI.Font>
           <Slider
-            style={{}}
-            min={0}
-            max={100}
+            min={1}
+            max={10}
             step={1}
             floatingLabel
-            renderThumb={() => (
-              <View style={{width: 20, height: 20, backgroundColor: 'red'}} />
-            )}
-            renderRail={() => <View />}
-            renderRailSelected={() => <View />}
-            renderLabel={() => <View />}
-            renderNotch={() => <View />}
-            onValueChanged={(low, high) => {
-              setEvaluation(`От ${low} до ${high}`)
-            }}
+            renderThumb={renderThumb}
+            renderRail={renderView}
+            renderRailSelected={renderView}
+            onValueChanged={onSliderValueChanged}
           />
         </View>
         <View key="volume">
+          <UI.Font size="xxLarge">{'Пищевые группы, объем'}</UI.Font>
           <UI.Font>{volume}</UI.Font>
           <Rating
             type="custom"
-            ratingImage={undefined}
-            ratingColor="#3498db"
-            ratingBackgroundColor="#c8c7c8"
+            ratingImage={FistIcon}
+            ratingColor="pink"
+            ratingBackgroundColor={theme.colors.background}
             ratingCount={10}
+            startingValue={1}
             imageSize={30}
-            onFinishRating={r => {
-              setVolume(`${r} кул.`)
-            }}
-            style={{paddingVertical: 10}}
+            onFinishRating={onFinishRating}
           />
         </View>
       </PagerView>
-      <UI.TextButton title="Назад" onPress={previous} />
-      <UI.TextButton title="Дальше" onPress={next} />
-      {saveActive && <UI.TextButton title="Сохранить" onPress={save} />}
-    </>
+      <View style={styles.footer}>
+        {currentPage !== 0 ? (
+          <UI.TextButton title="Назад" onPress={previous} />
+        ) : (
+          <View />
+        )}
+        {saveActive && <UI.TextButton title="Сохранить" onPress={save} />}
+        {currentPage !== 4 ? (
+          <UI.TextButton title="Дальше" onPress={next} />
+        ) : (
+          <View />
+        )}
+      </View>
+    </KeyboardAvoidingView>
   )
 }
+
+const renderView = () => <View />
 
 const createStyles = () =>
   StyleSheet.create({
     container: {
       flex: 1,
+      paddingTop: 24,
+      paddingHorizontal: 12,
+    },
+    pager: {
+      flex: 1,
+    },
+    lap: {
+      width: 20,
+      height: 20,
+      borderRadius: 10,
+      backgroundColor: 'pink',
+    },
+    footer: {
+      paddingBottom: 34,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
   })

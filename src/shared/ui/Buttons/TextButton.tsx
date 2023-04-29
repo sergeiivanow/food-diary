@@ -33,7 +33,6 @@ export function TextButton(props: ButtonProps & TouchableOpacityProps) {
 const createStyles = () =>
   StyleSheet.create({
     container: {
-      width: '100%',
       height: fluidSize(44, 'vertical'),
       borderRadius: fluidSize(8),
       justifyContent: 'center',

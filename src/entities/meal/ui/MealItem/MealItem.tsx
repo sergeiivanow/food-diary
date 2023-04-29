@@ -23,10 +23,8 @@ export function MealItem({item}: {item: Meal}) {
           <UI.Font size="xSmall">{format(date, 'HH:mm', {locale: ru})}</UI.Font>
         </View>
       </View>
-      <View style={styles.row}>
-        <UI.Font>{evaluation}</UI.Font>
-        <UI.Font>{volume}</UI.Font>
-      </View>
+      <UI.Font>{`Насыщение: ${evaluation}`}</UI.Font>
+      <UI.Font>{`Объем: ${volume}`}</UI.Font>
     </View>
   )
 }
