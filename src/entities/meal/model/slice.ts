@@ -51,9 +51,16 @@ export const mealSlice = createSlice({
       }
       state.mealSectionList = updatedSecitons
     },
+    remove: (state, action: PayloadAction<string>) => {
+      const updatedSecitons = [...state.mealSectionList]
+      for (let item of updatedSecitons) {
+        item.data = item.data.filter(_item => _item.mealDate !== action.payload)
+      }
+      state.mealSectionList = updatedSecitons
+    },
   },
 })
 
-export const {add} = mealSlice.actions
+export const {add, remove} = mealSlice.actions
 
 export const mealReducer = mealSlice.reducer

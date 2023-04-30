@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from 'shared/lib/hooks'
-import {add, Meal} from './slice'
+import {add, remove, Meal} from './slice'
 
 export function useMeal() {
   const dispatch = useAppDispatch()
@@ -9,8 +9,13 @@ export function useMeal() {
     dispatch(add(data))
   }
 
+  function removeMealByDate(mealDate: string) {
+    dispatch(remove(mealDate))
+  }
+
   return {
     mealSectionList,
+    removeMealByDate,
     addNewMeal,
   }
 }
