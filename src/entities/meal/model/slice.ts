@@ -54,6 +54,12 @@ export const mealSlice = createSlice({
     remove: (state, action: PayloadAction<string>) => {
       const updatedSecitons = [...state.mealSectionList]
       for (let item of updatedSecitons) {
+        if (item.data.length === 1) {
+          state.mealSectionList = updatedSecitons.filter(
+            section => section.title !== action.payload,
+          )
+          return
+        }
         item.data = item.data.filter(_item => _item.mealDate !== action.payload)
       }
       state.mealSectionList = updatedSecitons
