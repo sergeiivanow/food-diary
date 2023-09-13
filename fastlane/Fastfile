@@ -46,22 +46,22 @@ platform :android do
     build()
   end
   
-  lane :upload_build_to_diawi do
-    diawi(
-      token: ENV["DIAWI_TOKEN"],
-      file: ANDROID_RELEASE_APK_FILE_PATH,
-    )
+  # lane :upload_build_to_diawi do
+  #   diawi(
+  #     token: ENV["DIAWI_TOKEN"],
+  #     file: ANDROID_RELEASE_APK_FILE_PATH,
+  #   )
 
-    result_url = lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
+  #   result_url = lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
 
-    path = PROJECT_DIRECTORY + "/android/app/build.gradle"
-    re = /versionCode\s+(\d+)/
+  #   path = PROJECT_DIRECTORY + "/android/app/build.gradle"
+  #   re = /versionCode\s+(\d+)/
 
-    s = File.read(path)
-    versionCode = s[re, 1].to_i
+  #   s = File.read(path)
+  #   versionCode = s[re, 1].to_i
 
-    sh("curl -X POST 'https://api.telegram.org/bot#{ENV["TELEGRAM_TOKEN"]}/sendMessage' -d 'chat_id=#{ENV["TELEGRAM_CHAT_ID"]}&text=🔥 New version #{CURRENT_VERSION}(#{versionCode})\nInstallation link .apk \n#{result_url}'")
-  end
+  #   sh("curl -X POST 'https://api.telegram.org/bot#{ENV["TELEGRAM_TOKEN"]}/sendMessage' -d 'chat_id=#{ENV["TELEGRAM_CHAT_ID"]}&text=🔥 New version #{CURRENT_VERSION}(#{versionCode})\nInstallation link .apk \n#{result_url}'")
+  # end
 
   lane :deploy do
     upload_to_play_store(
